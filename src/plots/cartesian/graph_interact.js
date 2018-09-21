@@ -19,6 +19,7 @@ var makeDragBox = require('./dragbox').makeDragBox;
 var DRAGGERSIZE = require('./constants').DRAGGERSIZE;
 
 exports.initInteractions = function initInteractions(gd) {
+    console.time('*initInteractions')
     var fullLayout = gd._fullLayout;
 
     if(gd._context.staticPlot) {
@@ -152,6 +153,7 @@ exports.initInteractions = function initInteractions(gd) {
     };
 
     exports.updateFx(gd);
+    console.timeEnd('*initInteractions')
 };
 
 // Minimal set of update needed on 'modebar' edits.

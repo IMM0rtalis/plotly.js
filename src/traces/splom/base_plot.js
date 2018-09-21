@@ -24,8 +24,10 @@ function plot(gd) {
     var _module = Registry.getModule(SPLOM);
     var splomCalcData = getModuleCalcData(gd.calcdata, _module)[0];
 
+    console.time('prepareRegl')
     var success = prepareRegl(gd, ['ANGLE_instanced_arrays', 'OES_element_index_uint']);
     if(!success) return;
+    console.timeEnd('prepareRegl')
 
     if(fullLayout._hasOnlyLargeSploms) {
         drawGrid(gd);
@@ -87,6 +89,7 @@ function dragOne(gd, trace, scene) {
 }
 
 function drawGrid(gd) {
+    console.time('drawGrid')
     var fullLayout = gd._fullLayout;
     var regl = fullLayout._glcanvas.data()[0].regl;
     var splomGrid = fullLayout._splomGrid;
@@ -97,6 +100,7 @@ function drawGrid(gd) {
 
     splomGrid.update(makeGridData(gd));
     splomGrid.draw();
+    console.timeEnd('drawGrid')
 }
 
 function makeGridData(gd) {

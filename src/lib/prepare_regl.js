@@ -36,6 +36,7 @@ module.exports = function prepareRegl(gd, extensions) {
         if(d.pick && !fullLayout._has('parcoords')) return;
 
         try {
+            // TODO why is this so slow ~200ms
             d.regl = createRegl({
                 canvas: this,
                 attributes: {

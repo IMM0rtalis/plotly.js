@@ -47,6 +47,7 @@ function overlappingDomain(xDomain, yDomain, domains) {
 }
 
 function lsInner(gd) {
+    console.time('lsInner')
     var fullLayout = gd._fullLayout;
     var gs = fullLayout._size;
     var pad = gs.p;
@@ -329,6 +330,7 @@ function lsInner(gd) {
     exports.drawMainTitle(gd);
     ModeBar.manage(gd);
 
+    console.timeEnd('lsInner')
     return gd._promises.length && Promise.all(gd._promises);
 }
 

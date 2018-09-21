@@ -234,6 +234,7 @@ function plotOne(gd, cd0) {
 
     console.time('create')
     if(scene.matrix === true) {
+        // TODO dig in here!
         scene.matrix = createMatrix(regl);
     }
     console.timeEnd('create')
@@ -329,6 +330,7 @@ function editStyle(gd, cd0) {
     var opts = Lib.extendFlat({}, matrixOpts, convertMarkerStyle(trace), viewOpts);
     // TODO [un]selected styles
 
+    // TODO this is too long for arrayOk attributes!
     console.time('-update1')
     scene.matrix.update(opts, null);
     console.timeEnd('-update1')

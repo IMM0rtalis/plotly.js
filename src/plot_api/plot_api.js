@@ -149,7 +149,9 @@ exports.plot = function(gd, data, layout, config) {
         gd._replotPending = false;
     }
 
+    console.time('supplyDefaults')
     Plots.supplyDefaults(gd);
+    console.timeEnd('supplyDefaults')
 
     var fullLayout = gd._fullLayout;
     var hasCartesian = fullLayout._has('cartesian');
@@ -214,6 +216,7 @@ exports.plot = function(gd, data, layout, config) {
     // components can position themselves correctly
     var drawFrameworkCalls = 0;
     function drawFramework() {
+        console.time('drawFramework')
         var basePlotModules = fullLayout._basePlotModules;
 
         for(var i = 0; i < basePlotModules.length; i++) {
@@ -280,11 +283,13 @@ exports.plot = function(gd, data, layout, config) {
             }
         }
 
+        console.timeEnd('drawFramework')
         return Plots.previousPromises(gd);
     }
 
     // draw anything that can affect margins.
     function marginPushers() {
+        console.time('marginPushers')
         var calcdata = gd.calcdata;
         var i, cd, trace;
 
@@ -309,6 +314,7 @@ exports.plot = function(gd, data, layout, config) {
         }
 
         Plots.doAutoMargin(gd);
+        console.timeEnd('marginPushers')
         return Plots.previousPromises(gd);
     }
 
@@ -339,6 +345,7 @@ exports.plot = function(gd, data, layout, config) {
     }
 
     function doAutoRangeAndConstraints() {
+        console.time('doAutoRangeAndConstraints')
         if(gd._transitioning) return;
 
         subroutines.doAutoRangeAndConstraints(gd);
@@ -346,11 +353,14 @@ exports.plot = function(gd, data, layout, config) {
         // store initial ranges *after* enforcing constraints, otherwise
         // we will never look like we're at the initial ranges
         if(graphWasEmpty) Axes.saveRangeInitial(gd);
+        console.timeEnd('doAutoRangeAndConstraints')
     }
 
     // draw ticks, titles, and calculate axis scaling (._b, ._m)
     function drawAxes() {
-        return Axes.doTicks(gd, graphWasEmpty ? '' : 'redraw');
+        console.time('drawAxes')
+        var p = Axes.doTicks(gd, graphWasEmpty ? '' : 'redraw');
+        console.timeEnd('drawAxes')
     }
 
     var seq = [
