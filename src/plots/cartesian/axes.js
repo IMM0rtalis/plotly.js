@@ -2204,16 +2204,18 @@ axes.doTicksSingle = function(gd, arg, skipTitle) {
         // drawn grids for, so we don't overdraw overlaying subplots
         var finishedGrids = {};
 
-        subplots.map(function(subplot) {
-            var plotinfo = fullLayout._plots[subplot];
-            var counterAxis = plotinfo[counterLetter + 'axis'];
+        if(fullLayout._hasOnlyLargeSploms) {
+            subplots.map(function(subplot) {
+                var plotinfo = fullLayout._plots[subplot];
+                var counterAxis = plotinfo[counterLetter + 'axis'];
 
-            var mainCounterID = counterAxis._mainAxis._id;
-            if(finishedGrids[mainCounterID]) return;
-            finishedGrids[mainCounterID] = 1;
+                var mainCounterID = counterAxis._mainAxis._id;
+                if(finishedGrids[mainCounterID]) return;
+                finishedGrids[mainCounterID] = 1;
 
-            drawGrid(plotinfo, counterAxis, subplot);
-        });
+                drawGrid(plotinfo, counterAxis, subplot);
+            });
+        }
 
         var mainSubplot = ax._mainSubplot;
         var mainPlotinfo = fullLayout._plots[mainSubplot];
