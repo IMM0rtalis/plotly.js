@@ -465,8 +465,6 @@ exports.doTraceStyle = function(gd) {
         if(editStyle) editStyleCalls.push(function() { editStyle(gd, cd0); });
     }
 
-    // TODO regl-draw-queue!!!!
-
     if(editStyleCalls.length) {
         clearGlCanvases(gd);
         if(fullLayout._hasOnlyLargeSploms) {

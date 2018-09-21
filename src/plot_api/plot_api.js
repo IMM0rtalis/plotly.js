@@ -1361,17 +1361,13 @@ exports.restyle = function restyle(gd, astr, val, _traces) {
         if(flags.markerSize) {
             console.log('markerSize edit!!')
             Plots.doCalcdata(gd);
+            addAxRangeSequence(seq);
 
+            // TODO
             // if all axes have autorange:false, then
             // proceed to subroutines.doTraceStyle(),
             // otherwise we must go through addAxRangeSequence
-
-
-            // this does not work at the moment, as get a new scene
-            // on every splom _module.calc, which is a bug!!!
             // subroutines.doTraceStyle(gd);
-
-            addAxRangeSequence(seq);
         }
 
         if(flags.style) seq.push(subroutines.doTraceStyle);
