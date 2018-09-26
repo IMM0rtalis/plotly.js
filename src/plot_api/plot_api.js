@@ -1354,6 +1354,8 @@ exports.restyle = function restyle(gd, astr, val, _traces) {
     } else {
         seq.push(Plots.previousPromises);
 
+        // maybe only call Plots.supplyDateDefaults in splom case,
+        // to skip over long and slow axes defaults
         console.time('supply')
         Plots.supplyDefaults(gd);
         console.timeEnd('supply')
