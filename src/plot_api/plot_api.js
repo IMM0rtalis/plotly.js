@@ -361,6 +361,7 @@ exports.plot = function(gd, data, layout, config) {
         console.time('drawAxes')
         var p = Axes.doTicks(gd, graphWasEmpty ? '' : 'redraw');
         console.timeEnd('drawAxes')
+        return p;
     }
 
     var seq = [
