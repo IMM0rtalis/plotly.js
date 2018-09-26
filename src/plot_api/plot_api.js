@@ -1727,18 +1727,30 @@ exports.relayout = function relayout(gd, astr, val) {
         seq.push(subroutines.layoutReplot);
     }
     else if(Object.keys(aobj).length) {
-        Plots.supplyDefaults(gd);
-
-        if(flags.legend) seq.push(subroutines.doLegend);
-        if(flags.layoutstyle) seq.push(subroutines.layoutStyles);
-
         if(flags.axrange) {
-            addAxRangeSequence(seq, specs.rangesAltered);
-        }
+            if(gd._fullLayout._hasOnlyLargeSploms) {
+                for(var k in specs.rangesAltered) {
+                    var axName = Axes.id2name(k);
+                    var axIn = gd.layout[axName];
+                    var axOut = gd._fullLayout[axName];
+                    axOut.autorange = axIn.autorange;
+                    axOut.range = axIn.range.slice();
+                    axOut.cleanRange();
+                }
+            } else {
+                Plots.supplyDefaults(gd);
+            }
 
-        if(flags.ticks) seq.push(subroutines.doTicksRelayout);
-        if(flags.modebar) seq.push(subroutines.doModeBar);
-        if(flags.camera) seq.push(subroutines.doCamera);
+            addAxRangeSequence(seq, specs.rangesAltered);
+        } else {
+            Plots.supplyDefaults(gd);
+
+            if(flags.legend) seq.push(subroutines.doLegend);
+            if(flags.layoutstyle) seq.push(subroutines.layoutStyles);
+            if(flags.ticks) seq.push(subroutines.doTicksRelayout);
+            if(flags.modebar) seq.push(subroutines.doModeBar);
+            if(flags.camera) seq.push(subroutines.doCamera);
+        }
 
         seq.push(emitAfterPlot);
     }
