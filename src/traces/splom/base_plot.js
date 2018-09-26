@@ -192,6 +192,8 @@ function clean(newFullData, newFullLayout, oldFullData, oldFullLayout) {
             if(oldFullLayout._splomScenes) {
                 var scene = oldFullLayout._splomScenes[oldTrace.uid];
                 if(scene && scene.destroy) scene.destroy();
+                // must first set scene to null in order to get garbage collected
+                oldFullLayout._splomScenes[oldTrace.uid] = null;
                 delete oldFullLayout._splomScenes[oldTrace.uid];
                 console.log('gone', oldTrace.uid, oldFullLayout._splomScenes)
             }
@@ -204,7 +206,9 @@ function clean(newFullData, newFullLayout, oldFullData, oldFullLayout) {
 
     if(oldFullLayout._splomGrid &&
         (!newFullLayout._hasOnlyLargeSploms && oldFullLayout._hasOnlyLargeSploms)) {
+        // must first set scene to null in order to get garbage collected
         oldFullLayout._splomGrid.destroy();
+        oldFullLayout._splomGrid = null;
         delete oldFullLayout._splomGrid;
     }
 
